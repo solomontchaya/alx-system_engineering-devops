@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "hello $(echo $USER | tr '[:upper:]' '[:lower:]')"
+echo "hello $USER"
