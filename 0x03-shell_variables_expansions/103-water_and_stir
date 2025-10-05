@@ -1,42 +1,7 @@
 #!/bin/bash
-# Define custom bases
-water="ewatr"
-stir="ti.r"
-bestchol="bestchol"
-
-# Convert WATER from base WATER to decimal
-w=$(echo "$WATER" | awk -v base="$water" '
-{
-  n=0
-  for(i=1;i<=length($0);i++){
-    n=n*length(base)+index(base,substr($0,i,1))-1
-  }
-  print n
-}')
-
-# Convert STIR from base STIR to decimal
-s=$(echo "$STIR" | awk -v base="$stir" '
-{
-  n=0
-  for(i=1;i<=length($0);i++){
-    n=n*length(base)+index(base,substr($0,i,1))-1
-  }
-  print n
-}')
-
-# Add the numbers
-sum=$((w+s))
-
-# Convert sum to BESTCHOL base
-out=""
-base_len=${#bestchol}
-while [ $sum -gt 0 ]; do
-  rem=$((sum % base_len))
-  out="${bestchol:rem:1}$out"
-  sum=$((sum / base_len))
-done
-
-# Handle zero
-[ -z "$out" ] && out="${bestchol:0:1}"
-
-echo "$out"
+water="ewatr" stir="ti.r" bestchol="bestchol"
+w=$(echo "$WATER" | awk -v b="$water" '{for(i=1;i<=length;$0);i++)n=n*length(b)+index(b,substr($0,i,1))-1;print n}')
+s=$(echo "$STIR" | awk -v b="$stir" '{for(i=1;i<=length($0);i++)n=n*length(b)+index(b,substr($0,i,1))-1;print n}')
+sum=$((w+s)) out=""
+while [ $sum -gt 0 ]; do out="${bestchol:$((sum%${#bestchol})):1}$out" sum=$((sum/${#bestchol})); done
+[ -z "$out" ] && out="${bestchol:0:1}" && echo "$out"
