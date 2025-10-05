@@ -1,2 +1,3 @@
+#!/bin/bash
 w=$(echo "ibase=5;$(echo $WATER | tr water 01234)" | bc); s=$(echo "ibase=4;$(echo $STIR | tr stir 0123)" | bc)
 echo "obase=8;$((w+s))" | bc | tr 01234567 bestchol
